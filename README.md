@@ -5,3 +5,4 @@
 
 # good progress
 
+# creating models.py for each app
