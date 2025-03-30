@@ -6,3 +6,5 @@
 # good progress
 
 # creating models.py for each app
+
+# creating serializers.py for each app
