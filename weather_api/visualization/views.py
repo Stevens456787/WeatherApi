@@ -7,6 +7,7 @@ from .serializers import VisualizationSerializer
 from weather.models import WeatherData
 from django.utils import timezone
 from datetime import timedelta
+from .utils import generate_temperature_chart
 
 class VisualizationViewSet(viewsets.ModelViewSet):
     queryset = Visualization.objects.all()

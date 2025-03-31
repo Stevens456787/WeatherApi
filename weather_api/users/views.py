@@ -32,3 +32,4 @@ class APIKeyView(APIView):
     def get(self, request):
         user = request.user
         return Response({'api_key': str(user.api_key)}, status=status.HTTP_200_OK)
+    
