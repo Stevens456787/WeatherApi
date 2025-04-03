@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from .models import CustomUser
 from .serializers import UserSerializer, RegisterSerializer
 from rest_framework.decorators import action
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -32,4 +33,25 @@ class APIKeyView(APIView):
     def get(self, request):
         user = request.user
         return Response({'api_key': str(user.api_key)}, status=status.HTTP_200_OK)
-    
+
+
+class LoginView(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            'role': user.role
+        })   
+        
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response({'message': 'Successfully logged out'}, status=status.HTTP_200_OK) 

@@ -2,9 +2,10 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Visualization
-from .serializers import VisualizationSerializer
+from .models import Visualization, Location
+from .serializers import VisualizationSerializer, LocationSerializer
 from weather.models import WeatherData
+from rest_framework import serializers
 from django.utils import timezone
 from datetime import timedelta
 from .utils import generate_temperature_chart
@@ -64,3 +65,15 @@ class VisualizationViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+# filepath: c:\Users\Rnyamari\CAPSTONE PROJECT\WeatherApi\weather_api\visualization\views.py
+from django.http import JsonResponse
+
+def chart_view(request):
+    return JsonResponse({'message': 'Chart view placeholder'})
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
