@@ -17,15 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from users.views import UserViewSet, RegisterView, APIKeyView, LogoutView
+#from users.views import UserViewSet, RegisterView, APIKeyView, LogoutView
 from alerts.views import AlertViewSet  # Import AlertViewSet from the correct module
 from locations.views import LocationViewSet
 from weather.views import WeatherViewSet
-from users.views import LoginView
+#from users.views import LoginView
 from visualization.views import VisualizationViewSet, chart_view  # Import VisualizationViewSet and chart_view from the correct module
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
+#router.register(r'users', UserViewSet)
 router.register(r'weather', WeatherViewSet)
 router.register(r'alerts', AlertViewSet)
 router.register(r'locations', LocationViewSet, basename='location')
@@ -34,9 +34,9 @@ router.register(r'visualization', VisualizationViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/register/', RegisterView.as_view(), name='register'),
-    path('api/login/', LoginView.as_view(), name='login'),
-    path('api/logout/', LogoutView.as_view(), name='logout'),
-    path('api/api-key/', APIKeyView.as_view(), name='api-key'),
-    path('chart/', chart_view, name='chart'),
+    #path('api/register/', RegisterView.as_view(), name='register'),
+    path('api/v1/', include('djoser.urls')),
+    path('api/v1/', include('djoser.urls.authtoken')),
+    #path('api/api-key/', APIKeyView.as_view(), name='api-key'),
+    # path('chart/', chart_view, name='chart'),
 ]

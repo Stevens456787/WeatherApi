@@ -1,11 +1,12 @@
 from django.db import models
-from users.models import CustomUser
+#from users.models import CustomUser
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 class Location(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='locations')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='locations')
     name = models.CharField(max_length=100)
     latitude = models.FloatField()
     longitude = models.FloatField()

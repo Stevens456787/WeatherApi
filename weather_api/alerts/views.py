@@ -7,6 +7,7 @@ from .serializers import AlertSerializer
 class AlertViewSet(viewsets.ModelViewSet):
     queryset = Alert.objects.all()
     serializer_class = AlertSerializer
+    
 
     def get_permissions(self):
         # Only admins can create, update, or delete alerts
